@@ -1,0 +1,54 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<section class="main" role="main">
+  <div class="post">
+    <img src="{{ data.featured_image }}" alt="{{ data.featured_image_alt }}" />
+    <h2>{{ data.title }}</h2>
+
+    <div class="post-info">
+      <div>
+        <span>Published {{ data.published }}</span>
+      </div>
+      <div class="author">
+        <img
+          class="author-img"
+          src="{{ data.author.profile_image }}"
+          alt="{{ data.author.first_name }} {{ data.author.last_name }}"
+        />
+        <div class="author-name">
+          {{ data.author.first_name }} {{ data.author.last_name }}
+        </div>
+      </div>
+      {% if data.categories %}
+      <div class="categories">
+        <p>
+          Categories: {% for category in data.categories %}
+          <span>
+            {{ category.name }} {% if not forloop.last %}, {% endif %}
+          </span>
+          {% endfor %}
+        </p>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="post-content">{{ data.body|safe}}</div>
+
+    <div class="nav">
+      {% if meta.previous_post.slug %}
+      <a
+        class="prev"
+        href="{% url 'post_detail' slug=meta.previous_post.slug %}"
+        >Previous: {{meta.previous_post.title }}</a
+      >
+      {% endif %} {% if meta.next_post.slug %}
+      <a class="next" href="{% url 'post_detail' slug=meta.next_post.slug %}"
+        >Next: {{meta.next_post.title }}</a
+      >
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

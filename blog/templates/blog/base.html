@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      {% block title %}
+        Peter Olayinaka's blog
+      {% endblock %}
+    </title>
+    <base href="{% static '/' %}">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <meta name="description" content="{% block meta_description %}Peter Olayinka's ButterCMS blog{% endblock %}" />
+    {% block styles %}{% endblock %}
+  </head>
+  <body>
+    {% block header %}
+    <header role="Header" class="page-header">
+      <h1>
+        <a href="{% url 'blog' %}" title="Peter Olayinka's Blog">Peter Olayinka's Blog</a>
+      </h1>
+    </header>
+    {% endblock %}
+
+    {% if no_token %}
+    <section class="main" role="main">
+      <p>Please configure a valid token</p>
+    </section>
+    {% else %}
+        {% block content %} {% endblock %}
+    {% endif %}
+
+    {% block footer %}
+    <footer class="main-footer">
+      <small>Peter Olayinka &copy;2022.</small>
+    </footer>
+    {% endblock %}
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>

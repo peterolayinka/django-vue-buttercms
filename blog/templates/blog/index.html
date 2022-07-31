@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}
+  Peter Olayinka
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<div id="butter-page">
+  <render-element :fields="getPageFields()" />
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block scripts %}
+<script>
+  const butterToken = "{{ butter_token }}"
+</script>
+<script src="https://cdnjs.buttercms.com/buttercms-1.2.8.min.js"></script>
+<script src="https://unpkg.com/vue@3"></script>
+<script src="{% static 'js/vue/home.js' %}"></script>
+{% endblock %}

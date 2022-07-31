@@ -1,0 +1,59 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+{% if data.title %}
+{{ data.title }} | {{ data.title }}
+{% else %}
+{{ block.super }}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="main" role="main">
+  {% for post in data %}
+  <div class="post">
+    {% if post.featured_image %}
+    <a href="{% url 'post_detail' slug=post.slug %}">
+      <img src="{{ post.featured_image }}" alt="{{ post.featured_image_alt }}" />
+    </a>
+    {% endif %}
+    <h2><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a></h2>
+
+    <div class="post-info">
+      <div>
+        <span>Published {{ post.published }}</span>
+      </div>
+      <div class="author">
+        <img class="author-img" src="{{ post.author.profile_image }}" alt="{{ post.author.first_name }} {{ post.author.last_name }}" />
+        <div class="author-name">{{ post.author.first_name }} {{ post.author.last_name }}</div>
+      </div>
+      {% if post.categories %}
+      <div class="categories">
+        <p>Categories:
+          {% for category in post.categories %}
+          <span>
+            {{ category.name }} {% if not forloop.last %}, {% endif %}
+          </span>
+          {% endfor %}
+        </p>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="post-content">
+      <a href="{% url 'post_detail' slug=post.slug %}">{{ post.summary}}</a>
+    </div>
+  </div>
+
+  {% endfor %}
+  <div class="nav">
+    {% if meta.previous_page %}
+    <a class="prev" href="{% url 'blog' %}?page={{meta.previous_page}}">Previous</a>
+    {% endif %}
+
+    {% if meta.next_page %}
+    <a class="next" href="{% url 'blog' %}?page={{meta.next_page}}">Next</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
