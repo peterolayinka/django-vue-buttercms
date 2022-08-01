@@ -1,17 +1,8 @@
 from django.conf import settings
-from django.shortcuts import render
 from django.http import Http404
-from django.utils import dateparse
-from django.template.exceptions import TemplateDoesNotExist
-from django.template.loader import get_template
 from django.views.generic import TemplateView
 from django.views.decorators.clickjacking import xframe_options_exempt
 from .services.buttercms import ButterCMSBlogService
-
-import logging
-
-logger = logging.getLogger(__name__)
-
 
 class HomePageview(ButterCMSBlogService, TemplateView):
     template_name = "blog/index.html"
@@ -37,7 +28,6 @@ class BlogPageview(ButterCMSBlogService, TemplateView):
         }
 
         blog_posts = self.get_blog_posts(**query)
-        # import pdb; pdb.set_trace()
 
         if "code" in blog_posts and blog_posts["code"] == 404:
             raise Http404

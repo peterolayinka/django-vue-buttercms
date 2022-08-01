@@ -87,6 +87,10 @@ h1 a {
   color: #fff;
 }
 
+img {
+  max-width: 100%;
+}
+
 .main {
   width: 80%;
   margin: 0 auto;
@@ -391,6 +395,11 @@ header h1 {
   }
   .two_column_with_image .btn {
     margin-top: 25px;
+  }
+
+  .nav .next,
+.nav .prev {
+    font-size: 10px;
   }
 }
 @media (max-width: 500px) {

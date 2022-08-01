@@ -34,6 +34,10 @@ SECRET_KEY = env(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DJANGO_DEBUG", True)
 
+# I left this as a generic host to allow for any host,
+# In a production setting this should be restricted to the relative host
+# the host should be passed from an environment variable to make different
+# settings file for all the necessary environments.
 ALLOWED_HOSTS = ["*"]
 
 

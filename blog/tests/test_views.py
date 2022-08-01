@@ -1,21 +1,16 @@
-import pdb
 import copy
 
 from django.urls import reverse
 from django.test import TestCase
 from django.utils import dateparse
-from django.http import Http404
 from blog.services.buttercms import ButterCMSBlogService
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 class BlogViewTestCases(TestCase):
     def setUp(self):
         self.blog_service_mock = patch('blog.services.buttercms.ButterCMS')
         self.blog_service_patch = self.blog_service_mock.start()
         self.blog_service = ButterCMSBlogService()
-
-    def tearDown(self):
-        self.blog_service_mock.stop()
 
     @patch('blog.views.settings')
     def test_home_page_view(self, setting_patch):
@@ -51,6 +46,7 @@ class BlogViewTestCases(TestCase):
 
         url = reverse("blog")
         resp = self.client.get(url)
+
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.template_name, expected_template)
         self.assertEqual(list(resp.context_data.keys()), expected_context_keys)
@@ -61,8 +57,10 @@ class BlogViewTestCases(TestCase):
             "code": 404,
         }
         self.blog_service_patch.return_value.posts.all.return_value = errror_code
+
         url = reverse("blog")
         resp = self.client.get(url)
+
         self.assertEqual(resp.status_code, 404)
 
     def test_blog_detail_page_view_loads_successfully(self):
@@ -86,6 +84,7 @@ class BlogViewTestCases(TestCase):
 
         url = reverse("post_detail", args=["fake-slug"])
         resp = self.client.get(url)
+
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.template_name, expected_template)
         self.assertEqual(list(resp.context_data.keys()), expected_context_keys)
@@ -96,6 +95,8 @@ class BlogViewTestCases(TestCase):
             "code": 404,
         }
         self.blog_service_patch.return_value.posts.get.return_value = errror_code
+
         url = reverse("post_detail", args=["fake-slug"])
         resp = self.client.get(url)
+
         self.assertEqual(resp.status_code, 404)
